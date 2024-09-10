@@ -1,0 +1,63 @@
+
+import java.util.Scanner;
+
+public class JavaApplication33 {
+
+   
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        AmountDue due = new AmountDue();
+        System.out.println("Press any of the following then enter values separated by spaces:");
+        System.out.println("- Price only");
+        System.out.println("- Price and quantity");
+        System.out.println("- Price, quantity, and discount amount");
+        String input = scanner.nextLine();
+        String[] values = input.split(" ");
+        double amountDue = 0;
+        if (values.length == 1) {
+            // Case 1: Price only
+            double price = Double.parseDouble(values[0]);
+            amountDue = due.computeAmountDue(price);
+        } else if (values.length == 2) {
+           
+            double price = Double.parseDouble(values[0]);
+            int quantity = Integer.parseInt(values[1]);
+            amountDue = due.computeAmountDue(price, quantity);
+        } else if (values.length == 3) {
+           
+            double price = Double.parseDouble(values[0]);
+            int quantity = Integer.parseInt(values[1]);
+            double discount = Double.parseDouble(values[2]);
+            amountDue = due.computeAmountDue(price, quantity, discount);
+        } else {
+            System.out.println("Invalid input. Please enter 1, 2, or 3 values.");
+            return;
+        }
+       
+    }
+}
+
+
+
+class AmountDue {
+    
+    double computeAmountDue(double price) {
+        double total = price + (price * 0.12); 
+        return total;
+    }
+
+    
+    double computeAmountDue(double price, int quantity) {
+        double total = price * quantity;       
+        total += total * 0.12;                
+        return total;
+    }
+
+    
+    double computeAmountDue(double price, int quantity, double discount) {
+        double total = price * quantity;       
+        total -= discount;                    
+        total += total * 0.12;                 
+        return total;
+    }
+}
