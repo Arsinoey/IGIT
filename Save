@@ -1,0 +1,106 @@
+package ventura_carl_vinson;
+import java.util.Scanner;
+
+
+
+     class SavingsAccount {
+            
+            private double balance;             
+            public static double interestRate;  
+
+            public SavingsAccount() {
+                balance = 0.0;
+            }
+            
+            public static void setInterestRate(double newRate) {
+                interestRate = newRate;
+            }
+            
+            public static double getInterestRate() {
+                return interestRate;
+            }
+            
+            public double getBalance() {
+                return balance;
+            }
+            
+            public void deposit(double amount) {
+                balance += amount;
+            }
+            
+            public double withdraw(double amount) {
+                if (balance >= amount) {
+                    balance -= amount;
+                    return amount;
+                } else {
+                    return 0;
+                }
+            }
+            
+            public void addInterest() {
+                double interest = balance * interestRate;
+                balance += interest;
+            }
+
+            public static void showBalance(SavingsAccount account) {
+                System.out.println("Current balance: " + account.getBalance());
+            }
+      }
+
+
+
+     class startprog {
+        
+            void run() {
+            Scanner scanner = new Scanner(System.in);
+            SavingsAccount savings = new SavingsAccount();
+            System.out.print("Enter the interest rate: ");
+            double rate = scanner.nextDouble();
+            SavingsAccount.setInterestRate(rate);
+            System.out.print("Enter the amount to deposit: ");
+            double amount = scanner.nextDouble();
+            savings.deposit(amount);
+            SavingsAccount.showBalance(savings);
+            while (true) {
+                System.out.print("Press D for another deposit, W for withdraw, or E to exit: ");
+                char choice = scanner.next().charAt(0);
+                if (choice == 'D' || choice == 'd') {
+                    System.out.print("Enter the amount to deposit: ");
+                    amount = scanner.nextDouble();
+                    savings.deposit(amount);
+                } else if (choice == 'W' || choice == 'w') {
+                    System.out.print("Enter the amount to withdraw: ");
+                    amount = scanner.nextDouble();
+                    double withdrawn = savings.withdraw(amount);
+                    if (withdrawn == 0) {
+                        System.out.println("Insufficient balance for withdrawal.");
+                    } else {
+                        System.out.println("Withdrawn: " + withdrawn);
+                    }
+                } else if (choice == 'E' || choice == 'e') {
+                    break;
+                } else {
+                    System.out.println("Invalid input, please try again.");
+                    continue;
+                }
+               
+                if (savings.getBalance() > 1000) {
+                    savings.addInterest();
+                    SavingsAccount.showBalance(savings);
+                }
+            }
+        scanner.close();
+        }
+        
+        
+    }
+
+
+
+public class RunSavingsAccount {
+    public static void main(String[] args) {
+        startprog iget = new startprog();
+        iget.run();
+    }
+    
+}
